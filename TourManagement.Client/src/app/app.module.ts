@@ -93,5 +93,7 @@ export class AppModule {
     .forMember('managerid', function(opts){opts.mapFrom('manager'); })
 
     automapper.createMap('ShowCollectionFormModelShowsArray', 'ShowCollectionForCreation');
+
+    automapper.createMap('TourFormModel', 'TourForUpdate');
   }
 }
