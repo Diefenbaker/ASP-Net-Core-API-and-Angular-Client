@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TourManagement.API.Dtos
 {
-    public class TourWithManagerForCreation: TourForCreation
+    public class TourWithManagerForCreation : TourForCreation
     {
         public string ManagerId { get; set; }
     }

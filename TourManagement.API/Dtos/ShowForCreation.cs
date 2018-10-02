@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TourManagement.API.Dtos
+﻿namespace TourManagement.API.Dtos
 {
-    public class ShowForCreation: ShowAbstractBase
+    public class ShowForCreation : ShowAbstractBase
     {
     }
 }

@@ -15,13 +15,14 @@ export class ShowSingleComponent implements OnInit {
 
   constructor() { }
 
-  static createShow(){
-    return new FormGroup({
-      dateAndTime: new FormControl([]),
-      venue: new FormControl([]),
-      city: new FormControl([]),
-      country: new FormControl([])
-   });
+  static createShow() {
+    return new FormGroup(
+      {
+        date: new FormControl([]),
+        venue: new FormControl([]),
+        city: new FormControl([]),
+        country: new FormControl([])
+      });
   }
 
   ngOnInit() {

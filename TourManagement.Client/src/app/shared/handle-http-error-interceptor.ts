@@ -26,9 +26,7 @@ export class HandleHttpErrorInterceptor implements HttpInterceptor {
                 }
 
                 return Observable.of(new HttpResponse());
-                
             }
-            )
+        )
     }
 }
-

@@ -16,6 +16,5 @@ export class ShowsComponent implements OnInit {
   @Input() shows: Show[];
 
   ngOnInit() {
-
   }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TourManagement.API.Dtos
 {
-    public class TourWithEstimatedProfits: Tour
+    public class TourWithEstimatedProfits : Tour
     {
         public decimal EstimatedProfits { get; set; }
     }

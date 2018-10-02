@@ -16,8 +16,8 @@ export class ShowService extends BaseService {
     return this.http.get<Show[]>(`${this.apiUrl}/tours/${tourId}/shows`);
   }
 
-  addShowCollection(tourId: string, showsToAdd: ShowForCreation[]):Observable<Show[]>{
-    return this.http.post<Show[]>(`${this.apiUrl}/tours/${tourId}/showcollections`,
-    showsToAdd, {headers: {'Content-Type':'application/vnd.marvin.showcollectionforcreation+json'}});
+  addShowCollection(tourId: string, showsToAdd: ShowForCreation[]): Observable<Show[]> {
+    return this.http.post<Show[]>(`${this.apiUrl}/tours/${tourId}/showcollections`, showsToAdd,
+      { headers: { 'Content-Type': 'application/vnd.marvin.showcollectionforcreation+json' } });
   }
 }

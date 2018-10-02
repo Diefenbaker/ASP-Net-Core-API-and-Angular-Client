@@ -12,7 +12,6 @@ import { ShowSingleComponent } from '../show-single/show-single.component';
 })
 
 export class ShowAddComponent implements OnInit {
-  
   private sub: Subscription;
   private tourId: string;
   public showCollectionForm: FormGroup;
@@ -20,9 +19,7 @@ export class ShowAddComponent implements OnInit {
   constructor(private showService: ShowService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private router: Router){
-
-    }
+    private router: Router) { }
 
   ngOnInit() {
     this.showCollectionForm = this.formBuilder.group({
@@ -31,7 +28,7 @@ export class ShowAddComponent implements OnInit {
 
     this.addShow();
 
-    //get route data (tourId)
+    // get route data (tourId)
     this.sub = this.route.params.subscribe(
       params => {
         this.tourId = params['tourId'];
@@ -44,25 +41,26 @@ export class ShowAddComponent implements OnInit {
     showsFormArray.push(ShowSingleComponent.createShow());
   }
 
-  addShows(): void{
-    if(this.showCollectionForm.dirty && 
-      this.showCollectionForm.value.shows.length){
-        let showCollection = automapper.map(
-          'ShowCollectionFormModelShowsArray',
-          'ShowCollectionForCreation',
-          this.showCollectionForm.value.shows
-        );
+  addShows(): void {
+    if (this.showCollectionForm.dirty
+      && this.showCollectionForm.value.shows.length) {
 
-        this.showService.addShowCollection(this.tourId, showCollection)
+      let showCollection = automapper.map(
+        'ShowCollectionFormModelShowsArray',
+        'ShowCollectionForCreation',
+        this.showCollectionForm.value.shows);
+
+      this.showService.addShowCollection(this.tourId, showCollection)
         .subscribe(
           () => {
             this.router.navigateByUrl('/tours');
-          }
-        );
+          });
     }
   }
 
-  ngOnDestroy():void{
+
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
+
 }
