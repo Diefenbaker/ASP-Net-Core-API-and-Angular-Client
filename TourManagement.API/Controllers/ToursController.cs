@@ -29,22 +29,6 @@ namespace TourManagement.API.Controllers
             var tours = Mapper.Map<IEnumerable<Tour>>(toursFromRepo);
             return Ok(tours);
         }
-
-
-        //[HttpGet("{tourId}", Name = "GetTour")]
-        //public async Task<IActionResult> GetTour(Guid tourId)
-        //{
-        //    var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
-
-        //    if (tourFromRepo == null)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    var tour = Mapper.Map<Tour>(tourFromRepo);
-
-        //    return Ok(tour);
-        //}        
         
         [HttpGet("{tourId}")]
         public async Task<IActionResult> GetDefaultTour(Guid tourId)
@@ -69,17 +53,26 @@ namespace TourManagement.API.Controllers
 
         [HttpGet("{tourId}")]
         [RequestHeaderMatchesMediaType("Accept",
-            new[] { "application/vnd.marvin.tourwithestimatedprofits+json" })]
-        public async Task<IActionResult> GetTourWithEstimatedProfits(Guid tourId)
+            new[] { "application/vnd.marvin.tourwithshows+json" })]
+        public async Task<IActionResult> GetTourWithShows(Guid tourId)
         {
-            return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
+            return await GetSpecificTour<TourWithShows>(tourId, true);
         }
 
 
-
-        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId) where T : class
+        [HttpGet("{tourId}")]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithestimatedprofitsandshows+json" })]
+        public async Task<IActionResult> GetTourWithEstimatedProfitsAndShows(Guid tourId)
         {
-            var tourFromRepo = await _tourManagementRepository.GetTour(tourId);
+            return await GetSpecificTour<TourWithEstimatedProfitsAndShows>(tourId, true);
+        }
+
+
+        private async Task<IActionResult> GetSpecificTour<T>(Guid tourId,
+            bool includeShows = false) where T : class
+        {
+            var tourFromRepo = await _tourManagementRepository.GetTour(tourId, includeShows);
 
             if(tourFromRepo == null)
             {
@@ -88,6 +81,16 @@ namespace TourManagement.API.Controllers
 
             return Ok(Mapper.Map<T>(tourFromRepo));
         }
+
+
+        [HttpGet("tourId")]
+        [RequestHeaderMatchesMediaType("Accept",
+            new[] { "application/vnd.marvin.tourwithestimatedprofits+json" })]
+        public async Task<IActionResult> GetTourWithEstimatedProfits(Guid tourId)
+        {
+            return await GetSpecificTour<TourWithEstimatedProfits>(tourId);
+        }
+
 
         [HttpPost]
         [RequestHeaderMatchesMediaType("Content-Type",
