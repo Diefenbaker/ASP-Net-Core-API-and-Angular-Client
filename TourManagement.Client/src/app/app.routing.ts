@@ -6,18 +6,27 @@ import { ToursComponent, TourDetailComponent, TourUpdateComponent, TourAddCompon
 
 import { NgModule } from '@angular/core';
 import { ShowAddComponent } from './tours/shows/index';
+import { SigninOidcComponent } from './signin-oidc/signin-oidc.component';
+
+import { RequireAuthenticatedUserRouteGuardService } 
+from './shared/require-authenticated-user-route-guard.service';
 
 const routes: Routes = [
-    // redirect root to the dasbhoard route
-    { path: '', redirectTo: 'tours', pathMatch: 'full' },
-    { path: 'tours', component: ToursComponent },
+    { path: '', redirectTo: 'tours', pathMatch: 'full', 
+    canActivate: [RequireAuthenticatedUserRouteGuardService] },
+    { path: 'tours', component: ToursComponent, 
+    canActivate: [RequireAuthenticatedUserRouteGuardService] },
     { path: 'about', component: AboutComponent },
-    { path: 'tours/:tourId', component: TourDetailComponent },
-    { path: 'tour-update/:tourId', component: TourUpdateComponent },  
-    { path: 'tour-add', component: TourAddComponent },  
-    { path: 'tours/:tourId/show-add', component: ShowAddComponent }
-  //  { path: '**', redirectTo: 'tours' },
-];
+    { path: 'tours/:tourId', component: TourDetailComponent, 
+    canActivate: [RequireAuthenticatedUserRouteGuardService] },
+    { path: 'tour-update/:tourId', component: TourUpdateComponent,
+    canActivate: [RequireAuthenticatedUserRouteGuardService] }, 
+    { path: 'tour-add', component: TourAddComponent,
+    canActivate: [RequireAuthenticatedUserRouteGuardService] }, 
+    { path: 'tours/:tourId/show-add', component: ShowAddComponent,
+    canActivate: [RequireAuthenticatedUserRouteGuardService] },
+    { path: 'signin-oidc', component: SigninOidcComponent },
+    ];
 
 // define a module
 @NgModule({

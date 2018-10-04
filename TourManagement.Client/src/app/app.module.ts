@@ -23,6 +23,9 @@ import { HandleHttpErrorInterceptor } from './shared/handle-http-error-intercept
 import { WriteOutJsonInterceptor } from './shared/write-out-json-interceptor';
 import { EnsureAcceptHeaderInterceptor } from './shared/ensure-accept-header-interceptor';
 import { ShowSingleComponent } from './tours/shows/show-single/show-single.component';
+import { OpenIdConnectService } from './shared/open-id-connect.service';
+import { SigninOidcComponent } from './signin-oidc/signin-oidc.component';
+import { RequireAuthenticatedUserRouteGuardService } from './shared/require-authenticated-user-route-guard.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { ShowSingleComponent } from './tours/shows/show-single/show-single.compo
     ToursComponent,
     TourUpdateComponent,
     ShowAddComponent,
-    ShowSingleComponent
+    ShowSingleComponent,
+    SigninOidcComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +63,9 @@ import { ShowSingleComponent } from './tours/shows/show-single/show-single.compo
       useClass: HandleHttpErrorInterceptor,
       multi: true,
     },
-    GlobalErrorHandler, ErrorLoggerService, TourService, MasterDataService, ShowService, DatePipe],
+    GlobalErrorHandler, ErrorLoggerService, TourService, 
+    MasterDataService, ShowService, DatePipe, OpenIdConnectService,
+  RequireAuthenticatedUserRouteGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

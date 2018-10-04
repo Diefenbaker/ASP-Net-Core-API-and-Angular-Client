@@ -9,6 +9,7 @@ import { Manager } from '../../shared/manager.model';
 import { ShowSingleComponent } from '../shows/show-single/show-single.component';
 import { CustomValidators } from '../../shared/custom-validators';
 import { ValidationErrorHandler } from '../../shared/validation-error-handler';
+import { OpenIdConnectService } from '../../shared/open-id-connect.service';
 
 @Component({
   selector: 'app-tour-add',
@@ -20,12 +21,14 @@ export class TourAddComponent implements OnInit {
   public tourForm: FormGroup;
   bands: Band[];
   managers: Manager[];
-  private isAdmin: boolean = false;
+  private isAdmin: boolean = 
+    (this.openIdConnectService.user.profile.role === "Administrator");
 
   constructor(private masterDataService: MasterDataService,
     private tourService: TourService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private openIdConnectService: OpenIdConnectService) { }
 
   ngOnInit() {
 
@@ -33,12 +36,12 @@ export class TourAddComponent implements OnInit {
     this.tourForm = this.formBuilder.group({
       band: ['', Validators.required],
       manager: [''],
-      title: [''], //[Validators.required, Validators.maxLength(200)]],
+      title: ['', [Validators.required, Validators.maxLength(200)]],
       description: ['', Validators.maxLength(2000)],
       startDate: [, Validators.required],
       endDate: [, Validators.required],
       shows: this.formBuilder.array([])
-      });  //{ validator: CustomValidators.StartDateBeforeEndDateValidator });
+    }, { validator: CustomValidators.StartDateBeforeEndDateValidator });
 
     // get bands from master data service
     this.masterDataService.getBands()
@@ -61,6 +64,9 @@ export class TourAddComponent implements OnInit {
     showsFormArray.push(ShowSingleComponent.createShow());
   }
 
+  
+
+
   addTour(): void {
     if (this.tourForm.dirty && this.tourForm.valid) {
       if (this.isAdmin === true) {
@@ -74,8 +80,8 @@ export class TourAddComponent implements OnInit {
               () => {
                 this.router.navigateByUrl('/tours');
               },
-              (validationResult) => { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult);
-              });
+              (validationResult) => 
+              { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
         else {
           let tour = automapper.map(
@@ -87,8 +93,8 @@ export class TourAddComponent implements OnInit {
               () => {
                 this.router.navigateByUrl('/tours');
               },
-              (validationResult) => { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult);
-              });
+              (validationResult) => 
+              { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
       }
       else {
@@ -102,8 +108,8 @@ export class TourAddComponent implements OnInit {
               () => {
                 this.router.navigateByUrl('/tours');
               },
-              (validationResult) => { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult);
-              });
+              (validationResult) => 
+              { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
         else {
           let tour = automapper.map(
@@ -115,8 +121,8 @@ export class TourAddComponent implements OnInit {
               () => {
                 this.router.navigateByUrl('/tours');
               },
-              (validationResult) => { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult);
-              });
+            (validationResult) => 
+            { ValidationErrorHandler.handleValidationErrors(this.tourForm, validationResult); });
         }
       }
     }
